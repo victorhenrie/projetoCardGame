@@ -1,0 +1,65 @@
+/* Color Theme Swatches in Hex */
+.Verde-1-hex { color: #193C40; }
+.Verde-2-hex { color: #2E5902; }
+.Verde-3-hex { color: #214001; }
+.Verde-4-hex { color: #D96941; }
+.Verde-5-hex { color: #A62B1F; }
+.Verde-6-hex { color: #EBE2CB; }
+
+
+body {
+    background-color:#f4ffe7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 80vw;
+    max-width: 872px;
+}
+h1 {
+    color: #9fc98d;
+    font-size: 56px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+.card {
+    width: 117px;
+    height: 146px;
+    background-color:#9fc98d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 15px;
+    margin: 12px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: transform .5s;
+}
+
+.card.turn {
+    transform: rotateY(180deg);
+}
+
+.card img {
+    max-width: 80%;
+}
+
+.hidden {
+    display: none;
+    transition: all 1;
+    transition-delay: 1s;
+}
+
+.visible {
+    display: contents;
+    transition: all 1;
+    transition-delay: 1s;
+}
