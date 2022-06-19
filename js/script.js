@@ -115,13 +115,23 @@ function select(element) {
         }
     }
 }
-// VERIFICA FIM DO JOGO
 
-function endGame() {
-    if (imagesSelected.length == totalCardsTurned) {
-        alert(`Você ganhou em ${movementCounter} jogadas!`)
-    }
+// CONTA O TEMPO
+
+let timeDiv = document.querySelector('.time')
+timeDiv.innerHTML = '00:00'
+let countedSeconds = 0
+let finalTime
+function countSeconds() {
+    let minutes = Math.floor(countedSeconds/60)
+    let seconds = countedSeconds%60
+    let textMinutes = (`00${minutes}`).slice(-2);
+    let textSeconds = (`00${seconds}`).slice(-2);
+    countedSeconds++
+    timeDiv.innerHTML = `${textMinutes}:${textSeconds}` 
+    finalTime = `${textMinutes} minutos e ${textSeconds} segundos`
 }
+
 
 //SELECIONA O NUMERO DE CARTAS
 let numberCards
@@ -129,11 +139,21 @@ let numberCardsVerify = true
 
 while (numberCardsVerify) {
     if (numberCards < 4 || numberCards > 14 || numberCards % 2 !== 0) {
-        numberCards = prompt('Escola um número par entre 4 e 14')
+        numberCards = prompt('Escolha um número par entre 4 e 14')
     }
     else {
         numberCardsVerify = false
         selectImages()
         dealCards()
+        var cont = setInterval(countSeconds, 1000)
+    }
+}
+
+// VERIFICA FIM DO JOGO
+
+function endGame() {
+    if (imagesSelected.length == totalCardsTurned) {
+        clearInterval(cont)
+        alert(`Você ganhou em ${movementCounter} jogadas, em ${finalTime}!`)
     }
 }

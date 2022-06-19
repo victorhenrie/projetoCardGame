@@ -15,6 +15,23 @@ body {
     align-items: center;
 
 }
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 40px;
+    position: fixed;
+    top: 15px;
+    right: 0;
+    background-color: #214001;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;  
+    opacity: 80%;
+    color: white;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
