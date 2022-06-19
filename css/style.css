@@ -28,6 +28,7 @@ h1 {
     font-size: 56px;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
+    font-weight: 900;
 }
 .card {
     width: 117px;
@@ -41,7 +42,7 @@ h1 {
     margin: 12px;
     margin-bottom: 30px;
     cursor: pointer;
-    transition: transform .5s;
+    transition: transform .5s linear;
 }
 
 .card.turn {
@@ -54,12 +55,8 @@ h1 {
 
 .hidden {
     display: none;
-    transition: all 1;
-    transition-delay: 1s;
 }
 
 .visible {
     display: contents;
-    transition: all 1;
-    transition-delay: 1s;
 }
