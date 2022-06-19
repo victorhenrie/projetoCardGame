@@ -26,7 +26,7 @@ const container = document.querySelector('.container')
 function dealCards() {
     container.innerHTML = ''
     for (let i = 0; i < imagesSelected.length; i++) {
-            container.innerHTML += `
+        container.innerHTML += `
             <div onclick="select(this)" class="${i} ${imagesSelected[i]} card ">
             <img class = "front" src="./image/plantFront.png" alt="">
             <img class="back hidden" src="./image/${imagesSelected[i]}.gif">
@@ -48,13 +48,15 @@ let card2
 let image2
 let id2
 
+let waitingTurn
+
 function select(element) {
     let front = element.querySelector('.front');
-    let verify = front.classList.contains('front hidden');
+    let verify = front.classList.contains('hidden');
 
     function turn(element) {
         element.classList.add('turn');
-        setTimeout(function (){
+        setTimeout(function () {
             element.querySelector('.back').classList.remove('hidden')
             element.querySelector('.front').classList.add('hidden')
         }, 250)
@@ -62,58 +64,61 @@ function select(element) {
 
     function turnoff(element) {
         element.classList.remove('turn');
-        setTimeout(function (){
+        setTimeout(function () {
             element.querySelector('.back').classList.add('hidden')
             element.querySelector('.front').classList.remove('hidden')
         }, 250)
     }
 
-    if (verify == false) {
+    if (verify == false && waitingTurn == undefined || waitingTurn == false) {
         turn(element)
         movementCounter++
-        test ()
+        test()
     }
-    
+
 
     // TESTA CORRESPONDENCIA
 
-    function test () {
-        
-        if (cardsTurned == 1){
+
+
+    function test() {
+
+        if (cardsTurned == 1) {
             card2 = element
             image2 = element.classList[1]
             id2 = element.classList[0]
-            if(image1 == image2 && id1 !== id2) {
+            if (image1 == image2 && id1 !== id2) {
                 totalCardsTurned += 2
                 cardsTurned = 0
                 setTimeout(endGame, 1000)
-            } else { 
+            } else {
                 cardsTurned = 0
+                waitingTurn = true
+
                 function turnOffCard1() {
-                    turnoff (card1)
+                    turnoff(card1)
+                    waitingTurn = false
                 }
                 function turnOffCard2() {
-                    turnoff (card2)
+                    turnoff(card2)
                 }
                 setTimeout(turnOffCard1, 1000)
                 setTimeout(turnOffCard2, 1000)
             }
-            
-            
+
+
         } else if (cardsTurned == 0) {
             card1 = element
             image1 = element.classList[1]
             id1 = element.classList[0]
             cardsTurned++
-            console.log (image1)
-            
         }
     }
 }
 // VERIFICA FIM DO JOGO
 
 function endGame() {
-    if(imagesSelected.length == totalCardsTurned) {
+    if (imagesSelected.length == totalCardsTurned) {
         alert(`Você ganhou em ${movementCounter} jogadas!`)
     }
 }
@@ -123,12 +128,12 @@ let numberCards
 let numberCardsVerify = true
 
 while (numberCardsVerify) {
-    if(numberCards < 4 || numberCards > 14 || numberCards%2 !== 0) {
-        numberCards = prompt ('Escola um número par entre 4 e 14')
+    if (numberCards < 4 || numberCards > 14 || numberCards % 2 !== 0) {
+        numberCards = prompt('Escola um número par entre 4 e 14')
     }
     else {
-    numberCardsVerify = false
-    selectImages()
-    dealCards()
+        numberCardsVerify = false
+        selectImages()
+        dealCards()
     }
 }
