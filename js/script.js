@@ -13,6 +13,7 @@ function comparador() {
 //SELECIONA AS IMAGENS
 let imagesSelected = []
 function selectImages() {
+    imagesSelected = []
     for (let i = 0; i < (numberCards / 2); i++) {
         imagesSelected.push(images[i])
         imagesSelected.push(images[i])
@@ -49,10 +50,11 @@ let image2
 let id2
 
 let waitingTurn
+let verify
 
 function select(element) {
     let front = element.querySelector('.front');
-    let verify = front.classList.contains('hidden');
+    verify = front.classList.contains('hidden');
 
     function turn(element) {
         element.classList.add('turn');
@@ -70,10 +72,12 @@ function select(element) {
         }, 250)
     }
 
-    if (verify == false && waitingTurn == undefined || waitingTurn == false) {
-        turn(element)
-        movementCounter++
-        test()
+    if (verify == false) {
+        if (waitingTurn == undefined || waitingTurn == false) {
+            turn(element)
+            movementCounter++
+            test()
+        }
     }
 
 
@@ -123,12 +127,12 @@ timeDiv.innerHTML = '00:00'
 let countedSeconds = 0
 let finalTime
 function countSeconds() {
-    let minutes = Math.floor(countedSeconds/60)
-    let seconds = countedSeconds%60
+    let minutes = Math.floor(countedSeconds / 60)
+    let seconds = countedSeconds % 60
     let textMinutes = (`00${minutes}`).slice(-2);
     let textSeconds = (`00${seconds}`).slice(-2);
     countedSeconds++
-    timeDiv.innerHTML = `${textMinutes}:${textSeconds}` 
+    timeDiv.innerHTML = `${textMinutes}:${textSeconds}`
     finalTime = `${textMinutes} minutos e ${textSeconds} segundos`
 }
 
@@ -136,8 +140,10 @@ function countSeconds() {
 //SELECIONA O NUMERO DE CARTAS
 let numberCards
 let numberCardsVerify = true
+var cont
 
-while (numberCardsVerify) {
+function initial () {
+    while (numberCardsVerify) {
     if (numberCards < 4 || numberCards > 14 || numberCards % 2 !== 0) {
         numberCards = prompt('Escolha um número par entre 4 e 14')
     }
@@ -145,15 +151,41 @@ while (numberCardsVerify) {
         numberCardsVerify = false
         selectImages()
         dealCards()
-        var cont = setInterval(countSeconds, 1000)
+        cont = setInterval(countSeconds, 1000)
     }
+}
+
+//     while (numberCardsVerify) {
+//         numberCards = 6
+//         numberCardsVerify = false
+//         selectImages()
+//         dealCards()
+//         cont = setInterval(countSeconds, 1000)
+// }
 }
 
 // VERIFICA FIM DO JOGO
 
+document.querySelector('.concluded')
+
 function endGame() {
     if (imagesSelected.length == totalCardsTurned) {
         clearInterval(cont)
-        alert(`Você ganhou em ${movementCounter} jogadas, em ${finalTime}!`)
+        document.querySelector('.alert').innerHTML = `Você ganhou com ${movementCounter} jogadas, em ${finalTime}!`
+        document.querySelector('.concluded').classList.remove('hidden')
     }
 }
+
+function restart() {
+    numberCardsVerify = true
+    timeDiv.innerHTML = '00:00'
+    countedSeconds = 0
+    console.log('funfa')
+    document.querySelector('.concluded').classList.add('hidden')
+    numberCards = 0
+    totalCardsTurned = 0
+    movementCounter = 0
+    initial ()
+}
+
+initial ()
